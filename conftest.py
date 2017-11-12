@@ -3,6 +3,7 @@ import pytest
 import os.path
 import ftputil
 from fixture.application import Application
+
 fixture = None
 target = None
 
@@ -28,16 +29,18 @@ def app(request, config):
     browser = request.config.getoption("--browser")
     web_login = config['webadmin']
     if fixture is None or not fixture.is_valid():
-               fixture = Application(browser=browser, config=config)
+        fixture = Application(browser=browser, config=config)
     fixture.session.ensure_login(username=web_login['username'], password=web_login['password'])
     return fixture
 
 
-@pytest.fixture(scope ="session", autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def configure_server(request, config):
     install_server_configuration(config['ftp']['host'], config['ftp']['username'], config['ftp']['password'])
+
     def fin():
         restore_server_configuration(config['ftp']['host'], config['ftp']['username'], config['ftp']['password'])
+
     request.addfinalizer(fin)
 
 
@@ -56,21 +59,18 @@ def restore_server_configuration(host, username, password):
             if remote.path.isfile('config_inc.php'):
                 remote.remove("config_inc.php")
             remote.rename('config_inc.php.bak', 'config_inc.php')
-        
 
-@pytest.fixture(scope ="session", autouse=True)
+
+@pytest.fixture(scope="session", autouse=True)
 def stop(request):
     def fin():
         fixture.session.ensure_logout()
         fixture.destroy()
+
     request.addfinalizer(fin)
     return fixture
 
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="chrome")
+    parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
-
-
-
-

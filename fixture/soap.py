@@ -4,8 +4,8 @@ from model.project import Project
 import json
 import os.path
 
-class SoapHelper:
 
+class SoapHelper:
     def __init__(self, app):
         self.app = app
 
@@ -16,7 +16,6 @@ class SoapHelper:
             return True
         except WebFault:
             return False
-
 
     def get_project_list(self):
         with open(os.path.abspath("../target.json")) as f:
@@ -31,19 +30,3 @@ class SoapHelper:
             name = ProjectData.name
             project_list.append(Project(id=id, name=name))
         return project_list
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

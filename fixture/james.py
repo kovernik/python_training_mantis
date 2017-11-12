@@ -2,7 +2,6 @@ from telnetlib import Telnet
 
 
 class JamesHelper:
-
     def __init__(self, app):
         self.app = app
 
@@ -15,7 +14,6 @@ class JamesHelper:
         else:
             session.create_user(username, password)
         session.quit()
-
 
     class Session:
 

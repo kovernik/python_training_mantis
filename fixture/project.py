@@ -1,9 +1,9 @@
 from model.project import Project
 
+
 class ProjectHelper:
     def __init__(self, app):
         self.app = app
-
 
     def add_new_project(self, project_data):
         wd = self.app.wd
@@ -22,7 +22,6 @@ class ProjectHelper:
         wd.find_element_by_css_selector("input[value='Delete Project']").click()
         wd.find_element_by_css_selector("input[value='Delete Project']").click()
 
-
     def get_project_list(self):
         wd = self.app.wd
         self.open_project_list()
@@ -33,12 +32,7 @@ class ProjectHelper:
             project_list.append(Project(name=name, id=id))
         return project_list
 
-
     def open_project_list(self):
         wd = self.app.wd
         wd.find_element_by_link_text("Manage").click()
         wd.find_element_by_link_text("Manage Projects").click()
-
-
-
-

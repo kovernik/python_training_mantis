@@ -1,7 +1,7 @@
 import re
 
-class SignupHelper:
 
+class SignupHelper:
     def __init__(self, app):
         self.app = app
 
@@ -24,4 +24,3 @@ class SignupHelper:
 
     def extract_confirmation_url(self, text):
         return re.search("http://.*$", text, re.MULTILINE).group(0)
-
